@@ -168,7 +168,10 @@ section.section > p.section-desc { color: var(--color-neutral-700); font-size: v
 .priority-card.medium label { color: var(--color-warning-600); }
 .priority-card.high label { color: var(--color-accent-600); }
 .priority-card.urgent label { color: var(--color-danger-600); }
-.priority-card input:checked + label { background: currentColor; color: #fff !important; }
+.priority-card.low input:checked + label { background: var(--color-success-600); color: #fff; }
+.priority-card.medium input:checked + label { background: var(--color-warning-600); color: #fff; }
+.priority-card.high input:checked + label { background: var(--color-accent-600); color: #fff; }
+.priority-card.urgent input:checked + label { background: var(--color-danger-600); color: #fff; }
 .priority-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
 
 /* Standalone priority badges (component gallery) */
