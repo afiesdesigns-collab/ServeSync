@@ -1,322 +1,153 @@
-# ServeSync
-
-**Retail and Foodservice Equipment Service Platform**
+# ServeSync AI
+## Designing a connected service ecosystem for retail and foodservice equipment
 
-**Live prototype:** [afiesdesigns-collab.github.io/ServeSync](https://afiesdesigns-collab.github.io/ServeSync/) _(active once GitHub Pages is enabled)_
-**Case study by:** [Afshin Esmaeili](https://afshinesmaeeli.com) — Senior Product Designer
+**Independent UX concept by Afshin Esmaeili**
+Enterprise UX · Service Design · AI-Assisted Workflows · Web + Mobile · Design Systems
 
-ServeSync connects restaurant managers, call-center agents, field technicians, and operations managers through one end-to-end service platform for reporting and resolving beverage-equipment problems.
+**Live prototype:** [afiesdesigns-collab.github.io/ServeSync](https://afiesdesigns-collab.github.io/ServeSync/)
+**Case study by:** [Afshin Esmaeili](https://afshinesmaeili.com) — Senior Product Designer
 
-This repo documents the end-to-end product design process — problem framing, personas, workflows, information architecture, edge cases, design system, accessibility requirements, and research/testing plans — and includes a coded, accessible prototype of the flagship flow: scan equipment → report a problem → track status.
+> **Disclaimer:** ServeSync AI is an independent portfolio concept created with synthetic data. It is not affiliated with or commissioned by The Coca-Cola Company or any equipment manufacturer. All company names, users, operational scenarios, and datasets shown in this project are fictional or synthetic.
 
----
+## Overview
 
-## 1. The problem
+ServeSync AI connects restaurant managers, call-center specialists, field technicians, and operations leaders through one end-to-end platform for reporting, diagnosing, scheduling, repairing, and monitoring beverage-equipment incidents.
 
-When beverage equipment fails, the service experience is fragmented across telephone calls, emails, paper records, disconnected scheduling systems, and technician notes. The sections below break the experience into its component moments — what's broken about each one today, and the proposed answer.
+The project explores a difficult enterprise problem: how to make a fragmented service journey coherent across customer-facing and internal tools while using AI responsibly to accelerate — not replace — human judgment.
 
-### Report the issue
-
-**Current problem**
-- A restaurant manager may not know the equipment model, serial number, or correct service number.
-- Describing a technical problem over the phone is difficult.
-- Managers may report the same issue multiple times because they receive no confirmation.
-- Urgent failures and minor problems may enter the same queue.
+## The problem
 
-**Proposed answer**
-- Let managers scan a QR code attached to the equipment.
-- Automatically identify the equipment, location, service history, and warranty status.
-- Provide guided issue categories such as "not dispensing," "temperature problem," "leak," or "payment/display error."
-- Allow photo, video, and audio uploads.
-- Display an immediate case number and estimated response time.
+When critical equipment fails, customers and service teams often work across telephone calls, email, disconnected scheduling tools, incomplete equipment records, and manually written technician notes. Customers repeat information, agents troubleshoot without context, technicians arrive without the right parts, and operations leaders struggle to identify recurring failures.
 
-### Identify the equipment
-
-**Current problem**
-- Locations may contain several similar machines.
-- Serial numbers can be difficult to find.
-- Incorrect equipment identification causes delays and unnecessary technician visits.
-
-**Proposed answer**
-- Each machine receives a unique QR code.
-- Scanning it opens its equipment profile.
-- The profile contains model, serial number, installation date, location, warranty, maintenance history, and known issues.
-- Manual search remains available when the code is damaged.
-- Managers can confirm the equipment using a photograph.
-
-### Contact support
+### How might we…
 
-**Current problem**
-- Managers must repeat information to multiple support representatives.
-- Support agents cannot always see earlier conversations.
-- A manager may not know whether to call support, request maintenance, or contact an account representative.
+Create one accessible service ecosystem that gives every participant the right context, makes status transparent, reduces avoidable handoffs, and uses AI recommendations safely?
 
-**Proposed answer**
-- Provide one "Get help" entry point.
-- Route the case based on issue type, urgency, equipment, location, and service agreement.
-- Give call-center agents the complete customer and equipment context before the conversation starts.
-- Preserve chat, call notes, photographs, troubleshooting steps, and technician history in one case record.
-
-### Call-center troubleshooting
-
-**Current problem**
-- Agents follow inconsistent scripts.
-- Restaurants may receive repeated troubleshooting instructions.
-- Agents cannot easily determine whether remote troubleshooting succeeded.
+## Users
 
-**Proposed answer**
-- Give the agent a guided troubleshooting workspace.
-- Present steps based on equipment model and reported symptoms.
-- Show steps already attempted by the customer.
-- Allow agents to send illustrated instructions to the manager's phone.
-- Record the result of each step.
-- Recommend escalation when the issue cannot be resolved remotely.
+| User | Primary job | Core need |
+|---|---|---|
+| Restaurant manager | Restore service | Report quickly and know what happens next |
+| Call-center specialist | Resolve or route cases | Complete context and guided troubleshooting |
+| Field technician | Repair equipment | Correct diagnosis, parts, access details, and offline support |
+| Operations leader | Improve service performance | Trends, repeat failures, capacity, and service-level visibility |
 
-### Schedule a technician
+## Product surfaces
 
-**Current problem**
-- Managers may not know when help will arrive.
-- Technicians may be assigned without the required skill or replacement part.
-- Scheduling changes are communicated inconsistently.
+1. **Customer mobile experience** — QR-based equipment identification, guided reporting, media upload, appointment selection, and live case tracking.
+2. **Call-center workspace** — prioritized queue, customer and equipment context, AI-assisted troubleshooting, scheduling, communication history, and escalation.
+3. **Technician mobile application** — daily route, job history, parts verification, offline diagnostic checklist, repair documentation, and customer confirmation.
+4. **Operations dashboard** — service-level performance, equipment health, repeat incidents, regional comparison, technician capacity, and root-cause exploration.
 
-**Proposed answer**
-- Show available service windows.
-- Match technicians based on location, certification, workload, and required parts.
-- Allow the manager to provide access instructions and business hours.
-- Send confirmation, arrival updates, and delay notifications.
-- Provide simple rescheduling without requiring another telephone call.
+> **Prototype scope:** the coded prototype implements surface 1 only — the restaurant manager reporting a problem on a beverage dispenser: simulated QR scan, equipment confirmation, symptom selection (temperature, leak, or payment/display issue), an optional photo/video attachment, urgency selection (including a repeat-issue warning), and submission into a status/priority timeline. The call-center workspace, technician application, and operations dashboard are documented below as information architecture and workflows but are not yet built.
 
-### Order replacement parts
+## Primary experience
 
-**Current problem**
-- A technician may arrive and discover that the required part is unavailable.
-- Incorrect part selection creates repeat visits.
-- Customers have little visibility into part-related delays.
+A restaurant manager scans a QR code on a malfunctioning dispenser. ServeSync identifies the equipment and guides the manager through reporting a temperature problem. The platform recognizes a similar recent incident and routes the case to a call-center specialist.
 
-**Proposed answer**
-- Use the equipment profile and diagnosis to recommend compatible parts.
-- Let technicians reserve parts before accepting the assignment.
-- Show inventory availability and delivery estimates.
-- Notify the customer if a part delay changes the appointment.
-- Require confirmation before using a substitute part.
+The AI assistant recommends a troubleshooting sequence and displays its evidence and uncertainty. The specialist reviews each step, confirms the problem cannot be resolved remotely, and schedules a certified technician. The technician sees the equipment history, customer-uploaded video, access instructions, and recommended replacement part before accepting the job.
 
-### Monitor service status
+After the repair, the manager confirms the equipment is working. The operations dashboard connects the incident to a pattern of repeated failures and recommends preventive review. No consequential action is completed without human confirmation.
 
-**Current problem**
-- Customers repeatedly contact support for updates.
-- Different teams may communicate conflicting information.
-- Managers cannot see whether the case is waiting for a technician, part, or approval.
+## Design principles
 
-**Proposed answer** — a clear status timeline:
+- **Context travels with the case.** Customers should not repeat information at every handoff.
+- **Status answers three questions.** What is happening? Who owns it? What happens next?
+- **AI advises; people decide.** Recommendations show evidence, uncertainty, and reversible controls.
+- **Design for interruption.** Users can safely pause, resume, reassign, or recover work.
+- **One system, role-appropriate views.** Shared information remains coherent without overwhelming each role.
+- **Accessibility is part of quality.** Keyboard, screen-reader, contrast, error, and mobile requirements are designed from the beginning.
 
-1. Issue reported
-2. Case reviewed
-3. Troubleshooting in progress
-4. Technician assigned
-5. Appointment confirmed
-6. Technician en route
-7. Repair in progress
-8. Resolution pending confirmation
-9. Case closed
+## Key workflows
 
-Every status explains what is happening, who is responsible, and what happens next.
+### Customer reporting
+Scan QR code → confirm equipment → select symptom → answer guided questions → upload photo/video → review urgency → submit → receive case number and response expectation.
 
-### Confirm resolution
+### Call-center resolution
+Open prioritized case → review customer/equipment history → inspect AI recommendation → conduct guided troubleshooting → record outcomes → resolve remotely or escalate → schedule service → notify customer.
 
-**Current problem**
-- Cases may close before the restaurant confirms that the equipment works.
-- Repeat failures are treated as unrelated incidents.
-- Operations teams receive limited information about service quality.
+### Technician service
+Review assignment → verify certification and parts → accept job → check in → diagnose → repair → document work → capture customer confirmation → close or escalate.
 
-**Proposed answer**
-- Ask the manager to confirm that the equipment is operating correctly.
-- Collect a simple satisfaction rating and optional comments.
-- Reopen the case with one action if the problem returns.
-- Connect repeat incidents to the equipment history.
-- Flag recurring failures for replacement or preventive-maintenance review.
+### Operations investigation
+Review service dashboard → identify recurring issue → filter by model, region, and timeframe → inspect incident evidence → compare possible causes → assign preventive action.
 
----
+> **Prototype scope:** only the customer-reporting workflow above is coded end to end. The other three workflows are documented here as intended designs and are candidates for future prototype iterations.
 
-## 2. Users
+## AI experience
 
-### Restaurant or store manager
-- **Goals:** restore service quickly, understand when help will arrive, avoid repeating information, minimize disruption to customers and revenue.
-- **Pain points:** limited technical knowledge, little time during busy operating hours, uncertain service status, difficult equipment identification.
-- **Key interface:** a mobile-first reporting and tracking experience.
+The AI assistant may summarize case history, suggest troubleshooting steps, identify missing information, recommend routing, and flag recurring incidents. It may not independently close cases, order parts, dispatch technicians, or communicate consequential decisions to customers.
 
-### Call-center representative
-- **Goals:** understand the issue quickly, resolve simple problems remotely, reduce average handling time without reducing service quality, escalate cases with complete information.
-- **Pain points:** switching between multiple systems, incomplete case information, inconsistent troubleshooting processes, repeated customer calls.
-- **Key interface:** a desktop case-management and troubleshooting workspace.
+Every recommendation must show:
 
-### Field-service technician
-- **Goals:** arrive with the correct information and parts, complete repairs efficiently, document work without excessive administrative effort, continue working in locations with poor connectivity.
-- **Pain points:** incomplete diagnoses, incorrect parts, schedule changes, weak cellular service, repetitive documentation.
-- **Key interface:** an offline-capable mobile technician application.
+- Recommended action
+- Supporting evidence and source
+- Data freshness
+- Confidence or uncertainty
+- Assumptions
+- Potential risk
+- Accept, modify, reject, and escalate controls
+- Audit history
 
-### Regional operations manager
-- **Goals:** monitor service quality, identify repeated equipment problems, improve technician capacity and service-level performance, reduce downtime and repeat visits.
-- **Pain points:** fragmented performance data, delayed reporting, difficulty identifying root causes, limited visibility across regions.
-- **Key interface:** a desktop analytics and operations dashboard.
+A detailed "AI experience and safeguards" document is planned (see Repository map below) but not yet written. The repeat-issue detection and priority-badge components in the coded prototype are an early, working illustration of these principles — see the [live demo](https://afiesdesigns-collab.github.io/ServeSync/).
 
----
+## Research status
 
-## 3. Primary scenario
+The initial problem framing and user needs are **hypotheses**, not research findings. No interviews or usability sessions have been conducted yet, and nothing in this README should be read as a validated result. This repository intentionally separates assumptions from actual findings so that future portfolio claims remain credible.
 
-A restaurant manager scans a QR code on a malfunctioning beverage dispenser. ServeSync identifies the machine and guides the manager through reporting a temperature problem.
+Planned research:
 
-The system detects that the machine had a similar issue two weeks earlier. A call-center agent reviews the case and attempts guided troubleshooting. The problem remains unresolved, so the agent schedules a certified technician.
-
-Before accepting the assignment, the technician sees the equipment model, previous repair, customer-uploaded video, and recommended replacement part. The technician reserves the part, completes the repair, and records the result.
-
-The restaurant manager receives an update, confirms that the machine works, and closes the case. The regional manager sees that this model has an elevated repeat-failure rate and initiates a preventive-maintenance review.
-
----
-
-## 4. Information architecture
-
-**Restaurant experience**
-Home · My equipment · Report a problem · Active cases · Service history · Messages · Location settings · Help
-
-**Call-center workspace**
-Incoming queue · Case details · Customer profile · Equipment profile · Troubleshooting · Appointment scheduling · Parts availability · Communications history · Escalations
-
-**Technician application**
-Today's schedule · Job details · Navigation · Customer access instructions · Equipment history · Diagnostic checklist · Parts · Repair documentation · Customer confirmation
-
-**Operations dashboard**
-Service overview · Open cases · SLA performance · Equipment health · Repeat incidents · Regional comparison · Technician capacity · Parts availability · Customer satisfaction
-
----
-
-## 5. Key workflows
-
-**Manager reporting flow**
-Scan equipment → confirm location → select problem → answer diagnostic questions → upload media → select urgency → review information → submit case → receive confirmation.
-
-**Agent troubleshooting flow**
-Open case → review history → confirm symptoms → follow troubleshooting sequence → record outcomes → resolve remotely or escalate → schedule service → notify customer.
-
-**Technician flow**
-Review assigned job → verify skill and parts → accept assignment → navigate to location → check in → diagnose → complete repair → document parts and work → capture customer confirmation → close job.
-
-**Operations flow**
-Review dashboard → identify recurring issue → filter by equipment model and region → inspect incident history → determine operational action → assign preventive-maintenance program.
-
-> **Prototype scope:** the coded prototype in this repo implements the **manager reporting flow** end-to-end (scan → report → confirm → status timeline). The call-center, technician, and operations experiences are documented above as IA and workflows but not yet built — noted as next steps.
-
----
-
-## 6. Edge cases to design for
-
-- QR code is damaged.
-- The wrong machine is scanned.
-- The location has multiple machines with the same model.
-- The manager reports a safety hazard or active leak.
-- No appointment is available within the service-level agreement.
-- The assigned technician becomes unavailable.
-- The required part is out of stock.
-- The technician has no internet connection.
-- The customer is unavailable when the technician arrives.
-- The repair fails shortly after the case closes.
-- A manager accidentally submits the same case twice.
-- Equipment history contains conflicting information.
-
----
-
-## 7. Design system
-
-Components designed for this platform:
-
-Buttons and form controls · Search and filtering · Equipment cards · Status badges · Case timelines · Priority indicators · Data tables · Appointment selectors · File uploads · Notification banners · Troubleshooting steps · Technician checklists · Empty, loading, error, and offline states
-
-Each component is documented for: purpose, variants, interaction states, responsive behavior, content rules, accessibility requirements, usage examples, and situations where the component should **not** be used.
-
-The coded prototype implements a working token-driven subset: buttons/form controls, equipment card, status badges, priority indicator, case timeline, file upload, and a notification banner (offline state).
-
----
-
-## 8. Accessibility
-
-The platform is designed to demonstrate:
-
-- WCAG AA color contrast
-- Complete keyboard navigation
-- Visible focus states
-- Descriptive labels for form controls
-- Alternatives to color-only status indicators
-- Screen-reader announcements for status changes
-- Accessible error summaries
-- Minimum touch-target sizes
-- Captions or written descriptions for uploaded video
-- Reduced-motion support
-- Plain-language troubleshooting instructions
-
----
-
-## 9. Research plan
-
-**Research objectives**
-- Understand how equipment problems are currently reported.
-- Identify information lost between managers, agents, and technicians.
-- Learn what each role needs at every stage.
-- Understand which cases can be resolved remotely.
-- Identify the causes of repeat visits and delayed repairs.
-
-**Participants**
-
-Interview:
-- 3–5 restaurant or retail managers
-- 3–5 customer-support professionals
-- 3–5 field-service technicians
-- 2–3 operations managers
-
-If beverage-industry participants are unavailable, recruit people with similar experience in restaurant equipment, appliance repair, facilities management, telecom field service, or automotive service.
-
-**Interview questions**
-- Tell me about the last time equipment failed.
-- What did you do first?
-- What information did you have to provide?
-- Where did communication break down?
-- What made the situation urgent?
-- How did you know when help would arrive?
-- What information was missing when you received the case?
-- What causes repeat calls or repeat visits?
-- Which steps must remain under human control?
-- What would make you trust a new service platform?
-
-**Important rule:** the problems and proposed answers in this document are **hypotheses**, not research findings — no interviews have been conducted yet, and no quotes here are real. Once interviews are complete, this section will be replaced with actual themes and anonymized observations, cited as such.
-
----
-
-## 10. Usability test plan
-
-Tasks to test:
-
-1. Report a malfunctioning machine.
-2. Find the current service status.
-3. Troubleshoot a case as an agent.
-4. Schedule a qualified technician.
-5. Complete a repair without internet access.
-6. Identify recurring failures as an operations manager.
-
-Metrics to capture:
-- Task-completion rate
-- Time on task
-- Critical errors
-- Assistance required
-- Misunderstood labels
-- Confidence rating
-- System Usability Scale (SUS) score
-- Qualitative observations
-
-**Important rule:** this is a test plan, not a completed study. No usability testing has been run yet, so no results (e.g. "reduced time by 35%") are reported here. Results will be added only after real sessions are conducted and measured.
-
----
+- 5–8 contextual interviews across service roles
+- Affinity mapping and Jobs to Be Done synthesis
+- Current-state journey map and service blueprint
+- Two rounds of moderated usability testing with 5–8 participants per round
+- Accessibility evaluation and keyboard testing
+
+## Success measures
+
+These are proposed product measures — not claimed outcomes. No real usage data exists for this concept.
+
+- Case-reporting completion rate
+- Time to capture a complete case
+- First-contact resolution rate
+- Avoidable technician dispatch rate
+- Repeat-visit rate
+- Service-level compliance
+- Customer status-inquiry volume
+- Technician documentation completeness
+- Recommendation acceptance and correction rate
+- Usability and perceived-control scores
+
+## Repository map
+
+The documents below outline the planned research and design documentation for this project. **They have not been written yet** — this repository currently contains this README and the coded prototype described above. Writing these out is the intended next step, not a claim that they already exist.
+
+- Product brief *(planned)*
+- Research plan *(planned)*
+- Interview guide *(planned)*
+- Service blueprint *(planned)*
+- Information architecture and flows *(planned — summarized above under Key workflows)*
+- AI experience and safeguards *(planned — summarized above under AI experience)*
+- Usability test plan *(planned)*
+- Design system specification *(the coded prototype implements a working token-driven subset — see Tech below)*
+- Accessibility acceptance criteria *(planned)*
+- Portfolio case-study outline *(this README)*
+- Synthetic service cases *(planned dataset)*
+
+## Tradeoffs and limitations
+
+- Only the manager-reporting flow is coded; the call-center, technician, and operations surfaces exist only as IA and workflow descriptions.
+- The prototype is a static, front-end-only simulation — there is no real backend, ticketing system, or AI model behind the "repeat issue detected" logic; it is a scripted illustration of the intended behavior.
+- No research has been conducted, so the personas, jobs, and success measures above are working hypotheses that need to be tested, not conclusions.
+- The AI-experience safeguards (evidence, confidence, audit history) are demonstrated narrowly through the priority/status components in the prototype, not through an actual recommendation engine.
+
+## Lessons learned
+
+Framing this as a multi-surface ecosystem — rather than a single app — forced explicit decisions about what travels between roles (the case and its evidence) versus what stays role-specific (the call-center queue, the technician's offline checklist, the operations dashboard). Naming those boundaries early made it easier to scope a single, honest, end-to-end prototype slice instead of a shallow mockup of every screen.
 
 ## Tech
 
-The prototype is vanilla HTML, CSS (custom properties as design tokens), and JavaScript — no framework or build step. Built through an AI-assisted design-to-code workflow (Figma tokens → Claude Code) consistent with the approach used in [`design-system-prototype`](https://github.com/afiesdesigns-collab/design-system-prototype).
+The prototype is vanilla HTML, CSS (custom properties as design tokens), and JavaScript — no framework or build step. Built through an AI-assisted design-to-code workflow (Figma tokens → Claude Code), consistent with the approach used in [`design-system-prototype`](https://github.com/afiesdesigns-collab/design-system-prototype) and [`shelfsense-ai-retail-copilot`](https://github.com/afiesdesigns-collab/shelfsense-ai-retail-copilot).
 
 ## Run it locally
 
