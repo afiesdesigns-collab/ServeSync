@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ServeSync — Report a Problem Prototype</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="wrap">
+
+  <header class="page-head">
+    <h1>ServeSync</h1>
+    <p>Retail and foodservice equipment service platform. This page prototypes the flagship manager flow — scan equipment, report a problem, and track status — plus a gallery of the underlying design system components. See the <a href="README.md">README</a> for the full case study.</p>
+  </header>
+
+  <div aria-live="polite" class="visually-hidden" id="live-region"></div>
+
+  <section class="section" aria-labelledby="flow-heading">
+    <h2 id="flow-heading">Report a Problem — Manager Flow</h2>
+
+    <form id="report-form" novalidate>
+
+      <!-- Step 1: Scan -->
+      <div class="step" id="step-1" data-step="1">
+        <p class="step-count">Step 1 of 5</p>
+        <h3>Scan the equipment</h3>
+        <p style="color:var(--color-neutral-700);font-size:var(--text-sm);">Point your camera at the QR code on the machine. For this prototype, press the button to simulate a scan.</p>
+        <div class="btn-row" style="margin-top:var(--space-4);">
+          <button type="button" class="btn btn-primary" id="scan-btn">Simulate QR scan</button>
+        </div>
+        <div id="equipment-result" hidden style="margin-top:var(--space-5);">
+          <div class="equipment-card">
+            <div class="icon" aria-hidden="true">FZ</div>
+            <div>
+              <h4>FrostZone 3000 — Beverage Dispenser</h4>
+              <dl>
+                <dt>Serial</dt><dd>FZ3-88213-A</dd>
+                <dt>Location</dt><dd>Store #482 — Line 2</dd>
+                <dt>Warranty</dt><dd>Active until Mar 2027</dd>
+                <dt>Service history</dt><dd>Temperature issue reported 14 days ago</dd>
+              </dl>
+            </div>
+          </div>
+          <div class="banner banner-warning" role="note" style="margin-top:var(--space-4);">
+            <span class="banner-icon" aria-hidden="true">!</span>
+            <div><strong>Repeat issue detected.</strong> This machine had a similar report 2 weeks ago. That history will be shared with the support agent automatically.</div>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button type="button" class="btn btn-primary next-btn" data-next="2" id="to-step-2" disabled>Confirm equipment and continue</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Problem category -->
+      <div class="step" id="step-2" data-step="2" hidden>
+        <p class="step-count">Step 2 of 5</p>
+        <h3>What's the problem?</h3>
+        <fieldset style="border:none;padding:0;margin:0;">
+          <legend class="visually-hidden">Select a problem category</legend>
+          <div class="choice-group" id="problem-group">
+            <div class="choice-card">
+              <input type="radio" name="problem" id="problem-dispensing" value="Not dispensing" />
+              <label for="problem-dispensing">Not dispensing<span class="desc">No liquid or product comes out</span></label>
+            </div>
+            <div class="choice-card">
+              <input type="radio" name="problem" id="problem-temp" value="Temperature problem" />
+              <label for="problem-temp">Temperature problem<span class="desc">Too warm, too cold, or inconsistent</span></label>
+            </div>
+            <div class="choice-card">
+              <input type="radio" name="problem" id="problem-leak" value="Leak" />
+              <label for="problem-leak">Leak<span class="desc">Visible water or liquid leaking</span></label>
+            </div>
+            <div class="choice-card">
+              <input type="radio" name="problem" id="problem-payment" value="Payment/display error" />
+              <label for="problem-payment">Payment/display error<span class="desc">Screen, buttons, or payment issue</span></label>
+            </div>
+          </div>
+        </fieldset>
+        <div id="leak-banner" hidden style="margin-top:var(--space-4);">
+          <div class="banner banner-danger" role="alert">
+            <span class="banner-icon" aria-hidden="true">!</span>
+            <div><strong>Active leak is treated as a safety hazard.</strong> Please turn off the machine at the power source if it's safe to do so. This case will be flagged as Urgent.</div>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button type="button" class="btn btn-secondary prev-btn" data-prev="1">Back</button>
+          <button type="button" class="btn btn-primary next-btn" data-next="3" id="to-step-3" disabled>Continue</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Diagnostics + media + urgency -->
+      <div class="step" id="step-3" data-step="3" hidden>
+        <p class="step-count">Step 3 of 5</p>
+        <h3>A few details</h3>
+
+        <div class="field">
+          <label for="notes">Describe what you're seeing</label>
+          <textarea id="notes" rows="3" aria-describedby="notes-hint"></textarea>
+          <span class="hint" id="notes-hint">Optional, but helpful for the technician.</span>
+        </div>
+
+        <div class="field">
+          <label for="upload-input" id="upload-label">Add a photo or video (optional)</label>
+          <div class="upload-zone">
+            <input type="file" id="upload-input" aria-describedby="upload-hint" accept="image/*,video/*" multiple />
+            <strong>Choose files</strong> or drag them here
+          </div>
+          <span class="hint" id="upload-hint">Accepted: photos and videos. This helps the agent and technician diagnose remotely.</span>
+          <ul id="file-list" aria-live="polite"></ul>
+        </div>
+
+        <fieldset style="border:none;padding:0;margin:0 0 var(--space-4);">
+          <legend style="font-size:var(--text-sm);font-weight:600;margin-bottom:var(--space-2);">How urgent is this?</legend>
+          <div class="priority-group">
+            <div class="priority-card low">
+              <input type="radio" name="urgency" id="urgency-low" value="Low" />
+              <label for="urgency-low"><span class="priority-dot" aria-hidden="true"></span>Low</label>
+            </div>
+            <div class="priority-card medium">
+              <input type="radio" name="urgency" id="urgency-medium" value="Medium" checked />
+              <label for="urgency-medium"><span class="priority-dot" aria-hidden="true"></span>Medium</label>
+            </div>
+            <div class="priority-card high">
+              <input type="radio" name="urgency" id="urgency-high" value="High" />
+              <label for="urgency-high"><span class="priority-dot" aria-hidden="true"></span>High</label>
+            </div>
+            <div class="priority-card urgent">
+              <input type="radio" name="urgency" id="urgency-urgent" value="Urgent" />
+              <label for="urgency-urgent"><span class="priority-dot" aria-hidden="true"></span>Urgent — safety hazard</label>
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="btn-row">
+          <button type="button" class="btn btn-secondary prev-btn" data-prev="2">Back</button>
+          <button type="button" class="btn btn-primary next-btn" data-next="4">Review case</button>
+        </div>
+      </div>
+
+      <!-- Step 4: Review -->
+      <div class="step" id="step-4" data-step="4" hidden>
+        <p class="step-count">Step 4 of 5</p>
+        <h3>Review before submitting</h3>
+        <ul class="summary-list" id="summary-list">
+          <li><dt>Equipment</dt><dd>FrostZone 3000 — Store #482, Line 2</dd></li>
+          <li><dt>Problem</dt><dd id="summary-problem">—</dd></li>
+          <li><dt>Notes</dt><dd id="summary-notes">—</dd></li>
+          <li><dt>Files attached</dt><dd id="summary-files">0</dd></li>
+          <li><dt>Urgency</dt><dd id="summary-urgency">—</dd></li>
+        </ul>
+        <div class="btn-row">
+          <button type="button" class="btn btn-secondary prev-btn" data-prev="3">Back</button>
+          <button type="submit" class="btn btn-primary" id="submit-btn">Submit case</button>
+        </div>
+      </div>
+
+      <!-- Step 5: Confirmation -->
+      <div class="step" id="step-5" data-step="5" hidden>
+        <div class="case-confirm">
+          <p class="step-count">Case submitted</p>
+          <p class="case-number" id="case-number">Case #—</p>
+          <p style="color:var(--color-neutral-700);">Estimated first response: <strong>within 30 minutes</strong></p>
+        </div>
+      </div>
+    </form>
+  </section>
+
+  <section class="section" aria-labelledby="timeline-heading" id="timeline-section" hidden>
+    <h2 id="timeline-heading">Case Status Timeline</h2>
+    <p class="section-desc">Every status explains what's happening, who is responsible, and what happens next. Status is never communicated by color alone — each stage has a text label.</p>
+    <ol class="timeline" id="case-timeline">
+      <li class="done" data-stage="1"><span class="marker" aria-hidden="true">✓</span><span class="status-word">Complete</span><h4>Issue reported</h4><p>Your case was received and assigned a case number.</p></li>
+      <li class="current" data-stage="2"><span class="marker" aria-hidden="true">2</span><span class="status-word">In progress</span><h4>Case reviewed</h4><p>A support agent is reviewing your equipment and service history.</p></li>
+      <li class="upcoming" data-stage="3"><span class="marker" aria-hidden="true">3</span><span class="status-word">Upcoming</span><h4>Troubleshooting in progress</h4><p>The agent will attempt to resolve this remotely.</p></li>
+      <li class="upcoming" data-stage="4"><span class="marker" aria-hidden="true">4</span><span class="status-word">Upcoming</span><h4>Technician assigned</h4><p>A certified technician will be matched to this job.</p></li>
+      <li class="upcoming" data-stage="5"><span class="marker" aria-hidden="true">5</span><span class="status-word">Upcoming</span><h4>Appointment confirmed</h4><p>You'll receive a confirmed service window.</p></li>
+      <li class="upcoming" data-stage="6"><span class="marker" aria-hidden="true">6</span><span class="status-word">Upcoming</span><h4>Technician en route</h4><p>You'll get a real-time arrival update.</p></li>
+      <li class="upcoming" data-stage="7"><span class="marker" aria-hidden="true">7</span><span class="status-word">Upcoming</span><h4>Repair in progress</h4><p>The technician is on site working the case.</p></li>
+      <li class="upcoming" data-stage="8"><span class="marker" aria-hidden="true">8</span><span class="status-word">Upcoming</span><h4>Resolution pending confirmation</h4><p>We'll ask you to confirm the equipment works.</p></li>
+      <li class="upcoming" data-stage="9"><span class="marker" aria-hidden="true">9</span><span class="status-word">Upcoming</span><h4>Case closed</h4><p>Your feedback is recorded and linked to this equipment's history.</p></li>
+    </ol>
+    <div class="btn-row">
+      <button type="button" class="btn btn-secondary" id="advance-btn">Simulate next status update</button>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="badges-heading">
+    <h2 id="badges-heading">Component gallery — Status badges &amp; priority</h2>
+    <p class="section-desc">Status is never color-only: each badge and priority indicator pairs a shape/border with a text label.</p>
+    <div class="badge-row" style="margin-bottom:var(--space-4);">
+      <span class="status-badge open"><span class="dot" aria-hidden="true"></span>Open</span>
+      <span class="status-badge waiting"><span class="dot" aria-hidden="true"></span>Waiting on part</span>
+      <span class="status-badge closed"><span class="dot" aria-hidden="true"></span>Closed</span>
+    </div>
+    <div class="badge-row">
+      <span class="priority-badge low">Low</span>
+      <span class="priority-badge medium">Medium</span>
+      <span class="priority-badge high">High</span>
+      <span class="priority-badge urgent">Urgent — safety hazard</span>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="states-heading">
+    <h2 id="states-heading">Component gallery — Notification banners &amp; states</h2>
+    <div class="banner banner-success" role="status">
+      <span class="banner-icon" aria-hidden="true">✓</span>
+      <div><strong>Repair confirmed.</strong> Thanks for confirming the equipment is working correctly.</div>
+    </div>
+    <div class="banner banner-warning" role="note">
+      <span class="banner-icon" aria-hidden="true">!</span>
+      <div><strong>Part on backorder.</strong> Your appointment may shift by 1–2 days. We'll notify you if anything changes.</div>
+    </div>
+    <div class="banner banner-danger" role="alert">
+      <span class="banner-icon" aria-hidden="true">!</span>
+      <div><strong>Safety hazard reported.</strong> This case has been flagged Urgent and prioritized.</div>
+    </div>
+    <div class="banner banner-offline" role="status">
+      <span class="banner-icon" aria-hidden="true">⤓</span>
+      <div><strong>You're offline.</strong> The technician app keeps working — job details, checklists, and photos are saved and will sync once a connection is available.</div>
+    </div>
+    <p class="token-note">Tokens used: --color-primary/accent/danger/warning/success-* · --radius-md/pill · --focus-ring · --min-target</p>
+  </section>
+
+  <footer class="page-foot">
+    Built by <a href="https://afshinesmaeeli.com">Afshin Esmaeili</a> · <a href="README.md">Case study README</a>
+  </footer>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
