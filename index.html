@@ -16,6 +16,7 @@
 
   <div aria-live="polite" class="visually-hidden" id="live-region"></div>
 
+  <main>
   <section class="section" aria-labelledby="flow-heading">
     <h2 id="flow-heading">Report a Problem — Manager Flow</h2>
 
@@ -142,13 +143,13 @@
       <div class="step" id="step-4" data-step="4" hidden>
         <p class="step-count">Step 4 of 5</p>
         <h3>Review before submitting</h3>
-        <ul class="summary-list" id="summary-list">
-          <li><dt>Equipment</dt><dd>FrostZone 3000 — Store #482, Line 2</dd></li>
-          <li><dt>Problem</dt><dd id="summary-problem">—</dd></li>
-          <li><dt>Notes</dt><dd id="summary-notes">—</dd></li>
-          <li><dt>Files attached</dt><dd id="summary-files">0</dd></li>
-          <li><dt>Urgency</dt><dd id="summary-urgency">—</dd></li>
-        </ul>
+        <dl class="summary-list" id="summary-list">
+          <div><dt>Equipment</dt><dd>FrostZone 3000 — Store #482, Line 2</dd></div>
+          <div><dt>Problem</dt><dd id="summary-problem">—</dd></div>
+          <div><dt>Notes</dt><dd id="summary-notes">—</dd></div>
+          <div><dt>Files attached</dt><dd id="summary-files">0</dd></div>
+          <div><dt>Urgency</dt><dd id="summary-urgency">—</dd></div>
+        </dl>
         <div class="btn-row">
           <button type="button" class="btn btn-secondary prev-btn" data-prev="3">Back</button>
           <button type="submit" class="btn btn-primary" id="submit-btn">Submit case</button>
@@ -221,6 +222,7 @@
     </div>
     <p class="token-note">Tokens used: --color-primary/accent/danger/warning/success-* · --radius-md/pill · --focus-ring · --min-target</p>
   </section>
+  </main>
 
   <footer class="page-foot">
     Built by <a href="https://afshinesmaeeli.com">Afshin Esmaeili</a> · <a href="README.md">Case study README</a>
